@@ -1,0 +1,32 @@
+# Node / Next.js
+node_modules/
+.next/
+out/
+dist/
+
+# Flutter & Dart (ignorar cachés y compilados locales pesados)
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+**/build/
+!apps/web/public/projects/**
+
+# Environment Variables & Secrets
+.env
+.env*.local
+*.pem
+*.key
+*.cert
+*.pfx
+credentials.json
+*passkey*
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

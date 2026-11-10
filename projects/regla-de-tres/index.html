@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regla de 3 — SoyJere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #03070d;
+      --surface: #081724;
+      --surface2: #0f2536;
+      --border: rgba(255,255,255,0.07);
+      --cyan: #7ccabf;
+      --purple: #0f5877;
+      --pink: #f2d400;
+      --green: #67c900;
+      --text: #f3f8fb;
+      --muted: #66808f;
+      --radius: 16px;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header a {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header span {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 560px;
+      padding: 48px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .hero {
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .hero-mini {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .toggle-row {
+      display: flex;
+      background: var(--surface2);
+      border-radius: 10px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .toggle-btn {
+      flex: 1;
+      padding: 9px 12px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .toggle-btn.active {
+      background: var(--surface);
+      color: var(--cyan);
+      box-shadow: 0 0 0 1px rgba(124,202,191,0.3), 0 0 12px rgba(124,202,191,0.1);
+    }
+
+    .toggle-btn.warm.active {
+      color: var(--yellow);
+      box-shadow: 0 0 0 1px rgba(242,212,0,0.28), 0 0 12px rgba(242,212,0,0.12);
+    }
+
+    .toggle-formula {
+      font-size: 0.72rem;
+      opacity: 0.7;
+      font-weight: 400;
+    }
+
+    .mode-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: -10px;
+    }
+
+    .equation-preview {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .equation-preview span {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field-group label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .field-group label span {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+
+    .label-a { color: var(--cyan) !important; }
+    .label-b { color: var(--purple) !important; }
+    .label-c { color: var(--pink) !important; }
+    .label-d { color: var(--pink) !important; }
+
+    input[type="number"] {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    input[type="number"]:focus {
+      border-color: rgba(124,202,191,0.4);
+      box-shadow: 0 0 0 3px rgba(124,202,191,0.08);
+    }
+
+    .inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .result-display {
+      display: flex;
+      align-items: center;
+      height: 48px;
+      padding: 0 16px;
+      background: var(--surface2);
+      border-radius: 10px;
+      border: 1px solid rgba(0,255,148,0.2);
+    }
+
+    .result-display span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--green);
+    }
+
+    .btn-calc {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      color: var(--bg);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 0 20px rgba(124,202,191,0.25);
+    }
+
+    .btn-calc:hover {
+      opacity: 0.9;
+      box-shadow: 0 0 32px rgba(124,202,191,0.4);
+    }
+
+    .btn-calc:active { transform: scale(0.98); }
+
+    .result-box {
+      background: var(--surface2);
+      border: 1px solid rgba(124,202,191,0.2);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 0 24px rgba(124,202,191,0.06);
+      animation: fadeIn 0.25s ease;
+    }
+
+    .result-box.hidden { display: none; }
+
+    .result-box.error {
+      border-color: rgba(242,212,0,0.3);
+      box-shadow: 0 0 24px rgba(242,212,0,0.06);
+    }
+
+    .result-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .result-value {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    .result-value.error-text {
+      font-size: 0.95rem;
+      background: none;
+      -webkit-text-fill-color: var(--pink);
+      color: var(--pink);
+    }
+
+    .result-formula {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-reset:hover { border-color: rgba(255,255,255,0.15); color: var(--text); }
+
+    .info-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .info-section h2 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--purple);
+      letter-spacing: 0.3px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .info-item {
+      background: var(--surface2);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .info-item h3 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .info-item p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .details-panel {
+      background: var(--surface2);
+      border: 1px dashed rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .details-panel summary {
+      cursor: pointer;
+      color: var(--cyan);
+      font-size: 0.82rem;
+      font-weight: 600;
+      list-style: none;
+    }
+
+    .details-panel summary::-webkit-details-marker { display: none; }
+
+    .details-panel p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .practice-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .practice-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.2px;
+    }
+
+    .practice-box {
+      background: var(--surface2);
+      border: 1px solid rgba(124,202,191,0.18);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .practice-statement {
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .practice-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .practice-row input {
+      flex: 1;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(124,202,191,0.35);
+      color: var(--text);
+    }
+
+    .practice-feedback {
+      min-height: 20px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .practice-feedback.ok { color: var(--green); }
+    .practice-feedback.err { color: var(--pink); }
+
+    footer {
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+      width: 100%;
+    }
+
+    footer a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      header { padding: 16px 20px; }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="https://soyjere.com">← soyjere.com</a>
+    <span>Herramientas</span>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Calculadora de<br/><span>Regla de Tres</span></h1>
+      <p>Calcula X en segundos con proporciones directas.</p>
+      <p class="hero-mini">Simple, rápida y hecha para practicar.</p>
+    </div>
+
+    <div class="card">
+      <div class="toggle-row">
+        <button class="toggle-btn warm active" id="btnDirect" onclick="setRelation('direct')">
+          Directa
+        </button>
+        <button class="toggle-btn warm" id="btnInverse" onclick="setRelation('inverse')">
+          Indirecta
+        </button>
+      </div>
+
+      <div class="toggle-row">
+        <button class="toggle-btn" id="btnXLeft" onclick="setUnknownSide('left')">
+          X a la izquierda <span class="toggle-formula">(A/B = X/D)</span>
+        </button>
+        <button class="toggle-btn active" id="btnXRight" onclick="setUnknownSide('right')">
+          X a la derecha <span class="toggle-formula">(A/B = C/X)</span>
+        </button>
+      </div>
+
+      <p class="mode-hint" id="modeHint">Regla de 3 directa: si una cantidad sube, la otra también sube.</p>
+      <div class="equation-preview" id="equationPreview">A / B = C / <span>X</span></div>
+
+      <div class="inputs-grid" id="inputsGrid">
+        <!-- Se renderiza dinamicamente -->
+      </div>
+
+      <button class="btn-calc" onclick="calcular()">Calcular X</button>
+
+      <div class="result-box hidden" id="resultBox">
+        <span class="result-label">Resultado</span>
+        <span class="result-value" id="resultValue"></span>
+        <span class="result-formula" id="resultFormula"></span>
+      </div>
+
+      <button class="btn-reset" onclick="resetAll()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Limpiar
+      </button>
+    </div>
+
+    <div class="info-section">
+      <h2>¿Cómo funciona?</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <h3>Regla de 3 directa</h3>
+          <p>Se usa cuando si una cantidad aumenta, la otra tambien aumenta (o ambas bajan). Ejemplo: mas kilos, mas precio.</p>
+        </div>
+        <div class="info-item">
+          <h3>Regla de 3 indirecta</h3>
+          <p>Se usa cuando una sube y la otra baja. Ejemplo: mas velocidad, menos tiempo para llegar.</p>
+        </div>
+      </div>
+      <details class="details-panel">
+        <summary>Ver ejemplo rapido para ninos</summary>
+        <p>
+          Directa: 2 caramelos cuestan 4. ¿Cuanto cuestan 5 caramelos? Cuantos mas caramelos, mas cuesta.<br/><br/>
+          Indirecta: 2 personas pintan una pared en 6 horas. ¿Cuanto tardan 4 personas? Si hay mas personas, tarda menos.
+        </p>
+      </details>
+    </div>
+
+    <div class="practice-section">
+      <h2 class="practice-title">Practicar regla de tres</h2>
+      <div class="practice-box">
+        <p class="practice-statement" id="practiceStatement">Cargando ejercicio...</p>
+        <div class="practice-row">
+          <input type="number" id="practiceAnswer" placeholder="Tu respuesta" step="any" />
+          <button class="btn-secondary" onclick="checkPractice()">Revisar</button>
+          <button class="btn-secondary" onclick="generatePractice()">Otro</button>
+        </div>
+        <p class="practice-feedback" id="practiceFeedback"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Hecho con ♥ por <a href="https://soyjere.com">Jeree Ojeda</a>
+  </footer>
+
+  <script>
+    let relation = 'direct'; // direct | inverse
+    let unknownSide = 'right'; // right => D is X, left => C is X
+    let formValues = { a: '', b: '', c: '', d: '' };
+    let currentPractice = null;
+
+    function setRelation(next) {
+      relation = next;
+      document.getElementById('btnDirect').classList.toggle('active', next === 'direct');
+      document.getElementById('btnInverse').classList.toggle('active', next === 'inverse');
+      updateEquationHint();
+      renderInputs();
+      document.getElementById('resultBox').classList.add('hidden');
+    }
+
+    function setUnknownSide(next) {
+      unknownSide = next;
+      document.getElementById('btnXRight').classList.toggle('active', next === 'right');
+      document.getElementById('btnXLeft').classList.toggle('active', next === 'left');
+      updateEquationHint();
+      renderInputs();
+      document.getElementById('resultBox').classList.add('hidden');
+    }
+
+    function updateEquationHint() {
+      const modeHint = document.getElementById('modeHint');
+      const equationPreview = document.getElementById('equationPreview');
+
+      if (relation === 'direct') {
+        modeHint.textContent = 'Regla de 3 directa: si una cantidad sube, la otra tambien sube.';
+        equationPreview.innerHTML = unknownSide === 'right'
+          ? 'A / B = C / <span>X</span>'
+          : 'A / B = <span>X</span> / D';
+      } else {
+        modeHint.textContent = 'Regla de 3 indirecta: si una cantidad sube, la otra baja.';
+        equationPreview.innerHTML = unknownSide === 'right'
+          ? 'A x B = C x <span>X</span>'
+          : 'A x B = <span>X</span> x D';
+      }
+    }
+
+    function bindInput(id) {
+      const el = document.getElementById(id);
+      el.addEventListener('input', () => {
+        formValues[id.replace('val', '').toLowerCase()] = el.value;
+        recalcular();
+      });
+    }
+
+    function renderInputs() {
+      const grid = document.getElementById('inputsGrid');
+      const cField = unknownSide === 'left'
+        ? `
+          <div class="field-group">
+            <label><span style="color:var(--green)">X</span> &nbsp;C</label>
+            <div class="result-display"><span id="resultInline">—</span></div>
+          </div>
+        `
+        : `
+          <div class="field-group">
+            <label><span class="label-c">C</span></label>
+            <input type="number" id="valC" placeholder="Ej: 3" step="any" value="${formValues.c}" />
+          </div>
+        `;
+
+      const dField = unknownSide === 'right'
+        ? `
+          <div class="field-group">
+            <label><span style="color:var(--green)">X</span> &nbsp;D</label>
+            <div class="result-display"><span id="resultInline">—</span></div>
+          </div>
+        `
+        : `
+          <div class="field-group">
+            <label><span class="label-d">D</span></label>
+            <input type="number" id="valD" placeholder="Ej: 6" step="any" value="${formValues.d}" />
+          </div>
+        `;
+
+      grid.innerHTML = `
+        <div class="field-group">
+          <label><span class="label-a">A</span></label>
+          <input type="number" id="valA" placeholder="Ej: 5" step="any" value="${formValues.a}" />
+        </div>
+        <div class="field-group">
+          <label><span class="label-b">B</span></label>
+          <input type="number" id="valB" placeholder="Ej: 10" step="any" value="${formValues.b}" />
+        </div>
+        ${cField}
+        ${dField}
+      `;
+
+      bindInput('valA');
+      bindInput('valB');
+      if (unknownSide !== 'left') bindInput('valC');
+      if (unknownSide !== 'right') bindInput('valD');
+      recalcular();
+    }
+
+    function parseValues() {
+      return {
+        a: parseFloat(formValues.a),
+        b: parseFloat(formValues.b),
+        c: parseFloat(formValues.c),
+        d: parseFloat(formValues.d),
+      };
+    }
+
+    function getX(values) {
+      const { a, b, c, d } = values;
+      if (relation === 'direct') {
+        if (unknownSide === 'right') {
+          if (isNaN(a) || isNaN(b) || isNaN(c)) return { ok: false, msg: 'Completa A, B y C' };
+          if (a === 0) return { ok: false, msg: 'A no puede ser 0' };
+          return { ok: true, x: (b * c) / a, formula: `X = (${formatNum(b)} x ${formatNum(c)}) / ${formatNum(a)}` };
+        }
+        if (isNaN(a) || isNaN(b) || isNaN(d)) return { ok: false, msg: 'Completa A, B y D' };
+        if (b === 0) return { ok: false, msg: 'B no puede ser 0' };
+        return { ok: true, x: (a * d) / b, formula: `X = (${formatNum(a)} x ${formatNum(d)}) / ${formatNum(b)}` };
+      }
+
+      if (unknownSide === 'right') {
+        if (isNaN(a) || isNaN(b) || isNaN(c)) return { ok: false, msg: 'Completa A, B y C' };
+        if (c === 0) return { ok: false, msg: 'C no puede ser 0' };
+        return { ok: true, x: (a * b) / c, formula: `X = (${formatNum(a)} x ${formatNum(b)}) / ${formatNum(c)}` };
+      }
+      if (isNaN(a) || isNaN(b) || isNaN(d)) return { ok: false, msg: 'Completa A, B y D' };
+      if (d === 0) return { ok: false, msg: 'D no puede ser 0' };
+      return { ok: true, x: (a * b) / d, formula: `X = (${formatNum(a)} x ${formatNum(b)}) / ${formatNum(d)}` };
+    }
+
+    function recalcular() {
+      const inline = document.getElementById('resultInline');
+      if (!inline) return;
+      const res = getX(parseValues());
+      inline.textContent = res.ok ? formatNum(res.x) : '—';
+    }
+
+    function calcular() {
+      const box = document.getElementById('resultBox');
+      const val = document.getElementById('resultValue');
+      const formula = document.getElementById('resultFormula');
+      const res = getX(parseValues());
+
+      box.classList.remove('hidden', 'error');
+      val.classList.remove('error-text');
+
+      if (!res.ok) {
+        showError(box, val, formula, res.msg);
+        return;
+      }
+
+      const variable = unknownSide === 'right' ? 'D' : 'C';
+      val.textContent = `${variable} (X) = ${formatNum(res.x)}`;
+      formula.textContent = res.formula;
+    }
+
+    function showError(box, val, formula, msg) {
+      box.classList.add('error');
+      val.classList.add('error-text');
+      val.textContent = msg;
+      formula.textContent = '';
+    }
+
+    function resetAll() {
+      formValues = { a: '', b: '', c: '', d: '' };
+      renderInputs();
+      document.getElementById('resultBox').classList.add('hidden');
+    }
+
+    function formatNum(n) {
+      if (Number.isInteger(n)) return n.toString();
+      return parseFloat(n.toFixed(6)).toString();
+    }
+
+    function generatePractice() {
+      const type = Math.random() > 0.5 ? 'direct' : 'inverse';
+      const statement = document.getElementById('practiceStatement');
+      const feedback = document.getElementById('practiceFeedback');
+      const answer = document.getElementById('practiceAnswer');
+
+      if (type === 'direct') {
+        // Construimos ejemplos con resultado entero: b = a * factor.
+        const a = randInt(2, 9);
+        const factor = randInt(2, 8);
+        const c = randInt(2, 12);
+        const b = a * factor;
+        const x = c * factor;
+        currentPractice = { x, type };
+        statement.textContent = `Directa: Si ${a} cuadernos cuestan ${b}, ¿cuanto cuestan ${c} cuadernos?`;
+      } else {
+        // Ejemplo educativo sin conversiones: personas vs horas (resultado entero).
+        // Regla inversa: personas1 * horas1 = personas2 * horas2.
+        const p1 = randInt(2, 6);
+        const h1 = randInt(4, 10);
+        const totalTrabajo = p1 * h1;
+        const divisores = getDivisors(totalTrabajo).filter(d => d !== h1 && d >= 2 && d <= 10);
+        const h2 = divisores.length > 0 ? divisores[randInt(0, divisores.length - 1)] : h1;
+        const p2 = totalTrabajo / h2;
+        const x = h2;
+        currentPractice = { x, type };
+        statement.textContent = `Indirecta: Si ${p1} personas terminan una tarea en ${h1} horas, ¿en cuantas horas la terminan ${p2} personas?`;
+      }
+
+      answer.value = '';
+      feedback.textContent = '';
+      feedback.className = 'practice-feedback';
+      answer.focus();
+    }
+
+    function checkPractice() {
+      if (!currentPractice) return;
+      const input = parseFloat(document.getElementById('practiceAnswer').value);
+      const feedback = document.getElementById('practiceFeedback');
+
+      if (isNaN(input)) {
+        feedback.textContent = 'Ingresa un numero para revisar.';
+        feedback.className = 'practice-feedback err';
+        return;
+      }
+
+      const delta = Math.abs(input - currentPractice.x);
+      if (delta <= 0.01) {
+        feedback.textContent = `Correcto. X = ${formatNum(currentPractice.x)}`;
+        feedback.className = 'practice-feedback ok';
+      } else {
+        feedback.textContent = `Casi. Resultado esperado: ${formatNum(currentPractice.x)}`;
+        feedback.className = 'practice-feedback err';
+      }
+    }
+
+    function randInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function getDivisors(n) {
+      const out = [];
+      for (let i = 1; i <= n; i++) {
+        if (n % i === 0) out.push(i);
+      }
+      return out;
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') calcular();
+    });
+
+    updateEquationHint();
+    renderInputs();
+    generatePractice();
+  </script>
+</body>
+</html>
