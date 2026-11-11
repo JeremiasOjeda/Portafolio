@@ -1,0 +1,18 @@
+{
+  "name": "soyjere-portafolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monorepo del Portafolio y Hub de Herramientas de Jeremías Ojeda (soyjere.com)",
+  "scripts": {
+    "sync": "node scripts/sync-projects.mjs",
+    "dev": "pnpm run sync && pnpm --filter web dev",
+    "build": "pnpm run sync && pnpm --filter web build",
+    "start": "pnpm --filter web start",
+    "lint": "pnpm --filter web lint",
+    "typecheck": "pnpm --filter web typecheck"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
+

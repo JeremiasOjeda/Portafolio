@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * SISTEMA DE TOKENS SEMÁNTICOS — ESTILO TÉCNICO / SLATE
+ *
+ * Única fuente de verdad para la paleta de colores de toda la plataforma.
+ * Modificar cualquier valor aquí actualiza automáticamente todos los
+ * componentes en Modo Claro y Modo Oscuro sin editar clases en el JSX.
+ */
+@layer base {
+  :root {
+    color-scheme: light;
+
+    /* Superficies (Light Slate) */
+    --bg-canvas: #f8fafc;        /* slate-50: Fondo general de página */
+    --bg-surface: #ffffff;       /* white: Tarjetas y paneles principales */
+    --bg-elevated: #f1f5f9;      /* slate-100: Inputs, bloques de código, hover sutil */
+
+    /* Bordes técnicos */
+    --border-subtle: #e2e8f0;    /* slate-200: División estándar */
+    --border-strong: #cbd5e1;    /* slate-300: Bordes activos o enfatizados */
+
+    /* Tipografía */
+    --text-primary: #0f172a;     /* slate-900: Títulos y texto principal */
+    --text-secondary: #334155;   /* slate-700: Párrafos y descripciones */
+    --text-muted: #64748b;       /* slate-500: Metadatos, etiquetas, placeholders */
+
+    /* Acento Formal (Navy / Azul Cobalto Técnico — Cero Neón) */
+    --accent-primary: #1d4ed8;   /* blue-700 */
+    --accent-hover: #1e40af;     /* blue-800 */
+    --accent-subtle: #eff6ff;    /* blue-50 */
+    --accent-foreground: #ffffff;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    /* Superficies (Dark Slate Ingeniería) */
+    --bg-canvas: #020617;        /* slate-950: Fondo general profundo y sobrio */
+    --bg-surface: #0f172a;       /* slate-900: Tarjetas y contenedores */
+    --bg-elevated: #1e293b;      /* slate-800: Controles, inputs y cabeceras técnicas */
+
+    /* Bordes técnicos */
+    --border-subtle: #1e293b;    /* slate-800 */
+    --border-strong: #334155;    /* slate-700 */
+
+    /* Tipografía */
+    --text-primary: #f8fafc;     /* slate-50 */
+    --text-secondary: #cbd5e1;   /* slate-300 */
+    --text-muted: #64748b;       /* slate-500 */
+
+    /* Acento Formal adaptado a contraste oscuro */
+    --accent-primary: #3b82f6;   /* blue-500 */
+    --accent-hover: #2563eb;     /* blue-600 */
+    --accent-subtle: #172554;    /* blue-950 */
+    --accent-foreground: #ffffff;
+  }
+
+  html {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    min-height: 100vh;
+    selection-background-color: var(--accent-primary);
+  }
+}
+
+/* Patrón técnico de cuadrícula sutil para cabeceras de ingeniería */
+.bg-technical-grid {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+}
+

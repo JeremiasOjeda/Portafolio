@@ -3,6 +3,8 @@ node_modules/
 .next/
 out/
 dist/
+next-env.d.ts
+*.tsbuildinfo
 
 # Flutter & Dart (ignorar cachés y compilados locales pesados)
 .dart_tool/
@@ -12,7 +14,9 @@ dist/
 .pub-cache/
 .pub/
 **/build/
-!apps/web/public/projects/**
+
+# Assets compilados sincronizados automáticamente desde projects/
+apps/web/public/projects/
 
 # Environment Variables & Secrets
 .env
