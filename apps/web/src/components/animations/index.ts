@@ -7,5 +7,6 @@
  * y queda registrado en `@/config/animations.registry`.
  */
 
-export {};
-
+export { DotGridBackground } from "./dot-grid-background";
+export { default as DotGrid } from "./react-bits/dot-grid";
+export { default as StrokeText } from "./react-bits/stroke-text";

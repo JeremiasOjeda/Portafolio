@@ -14,23 +14,23 @@
     color-scheme: light;
 
     /* Superficies (Light Slate) */
-    --bg-canvas: #f8fafc;        /* slate-50: Fondo general de página */
-    --bg-surface: #ffffff;       /* white: Tarjetas y paneles principales */
-    --bg-elevated: #f1f5f9;      /* slate-100: Inputs, bloques de código, hover sutil */
+    --bg-canvas: #f4f5ee;        /* slate-50: Fondo general de página */
+    --bg-surface: #fbfcf8;       /* white: Tarjetas y paneles principales */
+    --bg-elevated: #e8ebdd;      /* slate-100: Inputs, bloques de código, hover sutil */
 
     /* Bordes técnicos */
-    --border-subtle: #e2e8f0;    /* slate-200: División estándar */
-    --border-strong: #cbd5e1;    /* slate-300: Bordes activos o enfatizados */
+    --border-subtle: #dde1cf;    /* slate-200: División estándar */
+    --border-strong: #c7cbb8;    /* slate-300: Bordes activos o enfatizados */
 
     /* Tipografía */
-    --text-primary: #0f172a;     /* slate-900: Títulos y texto principal */
-    --text-secondary: #334155;   /* slate-700: Párrafos y descripciones */
-    --text-muted: #64748b;       /* slate-500: Metadatos, etiquetas, placeholders */
+    --text-primary: #0f1f17;     /* slate-900: Títulos y texto principal */
+    --text-secondary: #3d4337;   /* slate-700: Párrafos y descripciones */
+    --text-muted: #6b7f67;       /* slate-500: Metadatos, etiquetas, placeholders */
 
     /* Acento Formal (Navy / Azul Cobalto Técnico — Cero Neón) */
-    --accent-primary: #1d4ed8;   /* blue-700 */
-    --accent-hover: #1e40af;     /* blue-800 */
-    --accent-subtle: #eff6ff;    /* blue-50 */
+    --accent-primary: #3e5a3f;   /* blue-700 */
+    --accent-hover: #1e3a2e;     /* blue-800 */
+    --accent-subtle: #e3ebdd;    /* blue-50 */
     --accent-foreground: #ffffff;
   }
 
@@ -38,24 +38,24 @@
     color-scheme: dark;
 
     /* Superficies (Dark Slate Ingeniería) */
-    --bg-canvas: #020617;        /* slate-950: Fondo general profundo y sobrio */
-    --bg-surface: #0f172a;       /* slate-900: Tarjetas y contenedores */
-    --bg-elevated: #1e293b;      /* slate-800: Controles, inputs y cabeceras técnicas */
+    --bg-canvas: #0f1f17;        /* slate-950: Fondo general profundo y sobrio */
+    --bg-surface: #1e3a2e;       /* slate-900: Tarjetas y contenedores */
+    --bg-elevated: #3d4337;      /* slate-800: Controles, inputs y cabeceras técnicas */
 
     /* Bordes técnicos */
-    --border-subtle: #1e293b;    /* slate-800 */
-    --border-strong: #334155;    /* slate-700 */
+    --border-subtle: #183d1c;    /* slate-800 */
+    --border-strong: #3e5a3f;    /* slate-700 */
 
     /* Tipografía */
-    --text-primary: #f8fafc;     /* slate-50 */
-    --text-secondary: #cbd5e1;   /* slate-300 */
-    --text-muted: #64748b;       /* slate-500 */
+    --text-primary: #c7cbb8;     /* slate-50 */
+    --text-secondary: #c7cbb8;   /* slate-300 */
+    --text-muted: #6b7f67;       /* slate-500 */
 
     /* Acento Formal adaptado a contraste oscuro */
-    --accent-primary: #3b82f6;   /* blue-500 */
-    --accent-hover: #2563eb;     /* blue-600 */
-    --accent-subtle: #172554;    /* blue-950 */
-    --accent-foreground: #ffffff;
+    --accent-primary: #6b7f67;   /* blue-500 */
+    --accent-hover: #3e5a3f;     /* blue-600 */
+    --accent-subtle: #183d1c;    /* blue-950 */
+    --accent-foreground: #0f1f17;
   }
 
   html {

@@ -26,5 +26,27 @@ export interface AnimationRegistryItem {
   description: string;
 }
 
-export const ANIMATIONS_REGISTRY: AnimationRegistryItem[] = [];
-
+export const ANIMATIONS_REGISTRY: AnimationRegistryItem[] = [
+  {
+    id: "stroke-text",
+    name: "StrokeText",
+    source: "react-bits",
+    componentPath: "src/components/animations/react-bits/stroke-text.tsx",
+    dependencies: ["gsap"],
+    tokensUsed: ["--text-primary", "--border-strong"],
+    usedIn: ["src/app/page.tsx"],
+    description:
+      "Animación de trazado tipográfico vectorial SVG con GSAP (dibujado de trazo stroke y relleno wipe progresivo) con re-dibujado al hover para la frase principal del Hero.",
+  },
+  {
+    id: "dot-grid",
+    name: "DotGridBackground",
+    source: "react-bits",
+    componentPath: "src/components/animations/react-bits/dot-grid.tsx",
+    dependencies: [],
+    tokensUsed: ["--bg-canvas", "--border-subtle"],
+    usedIn: ["src/app/page.tsx"],
+    description:
+      "Malla de puntos monocromática interactiva WebGL2 con física amortiguada ultra-smooth, retorno suave de 1.3s y ondas sutiles. Cubre todo el fondo de la página excluyendo el footer.",
+  },
+];
